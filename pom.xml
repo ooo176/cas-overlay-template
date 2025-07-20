@@ -112,9 +112,23 @@
     </properties>
 
     <repositories>
+        <!-- 1. 添加阿里云镜像仓库（置于首位） -->
+        <repository>
+            <id>aliyun-maven</id>
+            <name>Aliyun Maven Repository</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled> <!-- 阿里云默认关闭快照，按需开启 -->
+            </snapshots>
+        </repository>
+
+        <!-- 2. 原仓库配置（保持原有顺序） -->
         <repository>
             <id>sonatype-releases</id>
-            <url>http://oss.sonatype.org/content/repositories/releases/</url>
+            <url>http://oss.sonatype.org/content/repositories/releases</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -124,7 +138,7 @@
         </repository>
         <repository>
             <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -138,6 +152,19 @@
         </repository>
     </repositories>
 
+    <!-- 3. 禁用默认中央仓库（强制走阿里云） -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <releases>
+                <enabled>false</enabled> <!-- 禁用默认中央仓库 -->
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
     <profiles>
         <profile>
             <activation>
